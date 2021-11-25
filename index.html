@@ -1,26 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Calculator app</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="./reset.css" />
+    <link rel="stylesheet" type="text/css" href="./normalize.css" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
-</head>
-<body>
+    <title>Frontend Mentor | Calculator app</title>
+  </head>
+  <body>
+    <main class="main">
+      <section class="top flex">
+        <h1>calc</h1>
 
+        <div class="right-top flex">
+          <p>Theme</p>
+          <form>
+            <div class="switch-toggle switch-3 switch-candy">
+              <div class="flex labels">
+                <label for="theme-1">1 </label>
+                <label for="theme-2">2 </label>
+                <label for="theme-3">3 </label>
+              </div>
+              <div class="flex inputs">
+                <input
+                  id="theme-1"
+                  name="theme-toggle"
+                  type="radio"
+                  value="1"
+                  checked
+                />
+                <input
+                  id="theme-2"
+                  name="theme-toggle"
+                  type="radio"
+                  value="2"
+                />
+                <input
+                  id="theme-3"
+                  name="theme-toggle"
+                  type="radio"
+                  value="3"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+      <section class="screen">
+        <label for="screen"></label>
+        <input id="result" type="text" value="" placeholder="0" />
+      </section>
+      <section class="keypad">
+        <input id="seven" class="num-btn" type="button" value="7" />
+        <input id="eight" class="num-btn" type="button" value="8" />
+        <input id="nine" class="num-btn" type="button" value="9" />
+        <input id="del" type="button" value="Del" />
+        <input id="four" class="num-btn" type="button" value="4" />
+        <input id="five" class="num-btn" type="button" value="5" />
+        <input id="six" class="num-btn" type="button" value="7" />
+        <input id="add" type="button" class="num-btn" value="+" />
+        <input id="one" class="num-btn" type="button" value="1" />
+        <input id="two" class="num-btn" type="button" value="2" />
+        <input id="three" class="num-btn" type="button" value="3" />
+        <input id="substract" type="button" class="num-btn" value="-" />
+        <input id="point" class="num-btn" type="button" value="." />
+        <input id="zero" class="num-btn" type="button" value="0" />
+        <input id="divide" type="button" class="num-btn" value="/" />
+        <input
+          id="multiply"
+          type="button"
+          class="num-btn"
+          value="*"
+          placeholder="x"
+        />
+        <input id="reset" type="button" value="reset" />
+        <input id="equals" type="button" value="=" />
+      </section>
+    </main>
 
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
-</body>
+    <!-- <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Your Name Here</a>.
+    </div> -->
+  </body>
+  <script src="./scripts.js"></script>
 </html>
