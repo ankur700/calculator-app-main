@@ -39,13 +39,49 @@ function setTheme(theme) {
 }
 
 del.addEventListener("click", function () {
-  result.innerHTML = result.innerHTML.slice(0, -1);
+  if (result.innerHTML.length == 1) {
+    result.innerHTML = "0";
+  } else {
+    result.innerHTML = result.innerHTML.slice(0, -1);
+  }
 });
 
 document.querySelectorAll(".num-btn").forEach((item) => {
   item.addEventListener("click", (event) => {
-    result.innerHTML += item.value;
+    if (result.innerHTML == 0) {
+      result.innerHTML = item.innerHTML;
+    } else {
+      result.innerHTML += item.innerHTML;
+    }
   });
+});
+
+document.querySelectorAll(".key--operator").forEach((item) => {
+  item.addEventListener("click", function () {
+    if (item.dataset.action === "add") {
+      if (result.innerHTML.slice(-1) !== "+") {
+        result.innerHTML = result.innerHTML + "+";
+      }
+    } else if (item.dataset.action === "substract") {
+      if (result.innerHTML.slice(-1) !== "-") {
+        result.innerHTML = result.innerHTML + "-";
+      }
+    } else if (item.dataset.action === "multiply") {
+      if (result.innerHTML.slice(-1) !== "x") {
+        result.innerHTML = result.innerHTML + "x";
+      }
+    } else if (item.dataset.action === "divide") {
+      if (result.innerHTML.slice(-1) !== "/") {
+        result.innerHTML = result.innerHTML + "/";
+      }
+    }
+  });
+});
+
+point.addEventListener("click", function () {
+  if (result.innerHTML.slice(-1) !== ".") {
+    result.innerHTML = result.innerHTML + ".";
+  }
 });
 
 equals.addEventListener("click", function () {

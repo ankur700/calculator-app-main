@@ -69,30 +69,36 @@
         <div id="result" class="screen">0</div>
       </section>
       <section class="keypad">
-        <input id="seven" class="num-btn" type="button" value="7" />
-        <input id="eight" class="num-btn" type="button" value="8" />
-        <input id="nine" class="num-btn" type="button" value="9" />
-        <input id="del" type="button" value="Del" />
-        <input id="four" class="num-btn" type="button" value="4" />
-        <input id="five" class="num-btn" type="button" value="5" />
-        <input id="six" class="num-btn" type="button" value="7" />
-        <input id="add" type="button" class="num-btn" value="+" />
-        <input id="one" class="num-btn" type="button" value="1" />
-        <input id="two" class="num-btn" type="button" value="2" />
-        <input id="three" class="num-btn" type="button" value="3" />
-        <input id="substract" type="button" class="num-btn" value="-" />
-        <input id="point" class="num-btn" type="button" value="." />
-        <input id="zero" class="num-btn" type="button" value="0" />
-        <input id="divide" type="button" class="num-btn" value="/" />
-        <input
-          id="multiply"
-          type="button"
-          class="num-btn"
-          value="*"
-          placeholder="x"
-        />
-        <input id="reset" type="button" value="reset" />
-        <input id="equals" type="button" value="=" />
+        <button id="seven" class="num-btn">7</button>
+        <button id="eight" class="num-btn">8</button>
+        <button id="nine" class="num-btn">9</button>
+        <button id="del" data-action="clear">del</button>
+
+        <button id="four" class="num-btn">4</button>
+        <button id="five" class="num-btn">5</button>
+        <button id="six" class="num-btn">6</button>
+        <button id="add" class="key--operator" data-action="add">+</button>
+
+        <button id="one" class="num-btn">1</button>
+        <button id="two" class="num-btn">2</button>
+        <button id="three" class="num-btn">3</button>
+        <button id="substract" class="key--operator" data-action="substract">
+          -
+        </button>
+
+        <button id="point" data-action="decimal">.</button>
+        <button id="zero" class="num-btn">0</button>
+        <button id="divide" class="key--operator" data-action="divide">
+          /
+        </button>
+        <button id="multiply" class="key--operator" data-action="multiply">
+          &times;
+        </button>
+
+        <button id="reset" data-action="reset">reset</button>
+        <button id="equals" class="key--equal" data-action="calculate">
+          =
+        </button>
       </section>
     </main>
 
