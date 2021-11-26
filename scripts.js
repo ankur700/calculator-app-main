@@ -5,36 +5,53 @@ const equals = document.getElementById("equals");
 const reset = document.getElementById("reset");
 const del = document.getElementById("del");
 
-let one = document.getElementById("one").value;
-let two = document.getElementById("two").value;
-let three = document.getElementById("three").value;
-let four = document.getElementById("four").value;
-let five = document.getElementById("five").value;
-let six = document.getElementById("six").value;
-let seven = document.getElementById("seven").value;
-let eight = document.getElementById("eight").value;
-let nine = document.getElementById("nine").value;
-
 const point = document.getElementById("point");
 const add = document.getElementById("add");
 const substract = document.getElementById("substract");
 const multiply = document.getElementById("multiply");
 const divide = document.getElementById("divide");
+let radios = document.getElementsByName("theme-toggle");
+const selectedTheme = document.getElementById("selected-theme");
+
+let theme;
+
+if (theme == null) {
+  setTheme("theme1");
+} else {
+  setTheme(theme);
+}
+
+for (let radio of radios) {
+  radio.addEventListener("click", function () {
+    let theme = this.value;
+    setTheme(theme);
+  });
+}
+
+function setTheme(theme) {
+  if (theme == "theme1") {
+    selectedTheme.href = "./themes/theme1.css";
+  } else if (theme == "theme2") {
+    selectedTheme.href = "./themes/theme2.css";
+  } else if (theme == "theme3") {
+    selectedTheme.href = "./themes/theme3.css";
+  }
+}
 
 del.addEventListener("click", function () {
-  result.value = result.value.slice(0, -1);
+  result.innerHTML = result.innerHTML.slice(0, -1);
 });
 
 document.querySelectorAll(".num-btn").forEach((item) => {
   item.addEventListener("click", (event) => {
-    result.value += item.value;
+    result.innerHTML += item.value;
   });
 });
 
 equals.addEventListener("click", function () {
-  result.value = eval(result.value);
+  result.innerHTML = eval(result.innerHTML);
 });
 
 reset.addEventListener("click", function () {
-  result.value = "";
+  result.innerHTML = "0";
 });

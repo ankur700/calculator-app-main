@@ -1,20 +1,5 @@
 /* Custom variables */
 :root {
-  /* colors */
-  --clr-t1-main-bg: 222 26% 31%;
-  --clr-t1-toggle-bg: 223 31% 20%;
-  --clr-t1-screen-bg: 224 36% 15%;
-
-  --clr-t1-blue-key-bg: 225 21% 49%;
-  --clr-t1-blue-key-shadow: 224 28% 35%;
-  --clr-t1-red-key-bg: 6 63% 50%;
-  --clr-t1-red-key-shadow: 6 70% 34%;
-  --clr-t1-orange-key-bg: 30 25% 89%;
-  --clr-t1-gray-orange-key-shadow: 28 16% 65%;
-
-  --clr-t1-grayish-blue-text: 221 14% 31%;
-  --clr-white: 0 0% 100%;
-
   /* font family */
   --ff-sans-serif: "Spartan", sans-serif;
 
@@ -88,12 +73,12 @@ img {
 /* component css */
 
 body {
-  background-color: hsl(var(--clr-t1-main-bg));
+  background-color: hsl(var(--clr-main-bg));
 }
 .main {
   padding-inline: 1.5rem;
   padding-block: 1rem;
-  background-color: hsl(var(--clr-t1-main-bg));
+  background-color: hsl(var(--clr-main-bg));
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -101,7 +86,7 @@ body {
 .top {
   justify-content: space-between;
   align-items: baseline;
-  color: hsl(var(--clr-white));
+  color: hsl(var(--clr-top-text));
 }
 
 .top h1 {
@@ -123,7 +108,7 @@ body {
 }
 
 .switch-toggle {
-  background: hsl(var(--clr-t1-toggle-bg));
+  background: hsl(var(--clr-toggle-bg));
   position: relative;
   width: 60px;
   height: 20px;
@@ -160,7 +145,7 @@ body {
 }
 
 .switch-toggle input[type="radio"]:checked {
-  background: hsl(var(--clr-t1-red-key-bg));
+  background: hsl(var(--clr-equal-key-bg));
   border-radius: 50%;
 }
 
@@ -171,33 +156,26 @@ body {
 
 .screen .error {
   font-size: 1rem !important;
-  color: hsl(var(--clr-t1-red-key-bg)) !important;
-}
-
-input[type="text"],
-input[type="text"]:focus,
-input::placeholder {
-  border: 0;
-  outline: 0;
-  color: hsl(var(--clr-white));
+  color: hsl(var(--clr-equal-key-bg)) !important;
 }
 
 #result {
-  background-color: hsl(var(--clr-t1-screen-bg));
+  background-color: hsl(var(--clr-screen-bg));
   padding: 1rem;
   outline: none;
   border: 0;
   width: 100%;
-  color: hsl(var(--clr-white));
+  color: hsl(var(--clr-top-text));
   font-size: var(--fs-body);
   direction: rtl;
   font-family: var(--ff-sans-serif);
   display: flex;
   align-items: center;
+  height: 65px;
 }
 
 .keypad {
-  background: hsl(var(--clr-t1-toggle-bg));
+  background: hsl(var(--clr-toggle-bg));
   padding: 1rem;
   display: grid;
   border-radius: 10px;
@@ -212,10 +190,10 @@ input::placeholder {
   border: 0;
   height: 50px;
   margin-block: auto;
-  background: hsl(var(--clr-t1-orange-key-bg));
-  color: hsl(var(--clr-t1-grayish-blue-text));
+  background: hsl(var(--clr-num-key-bg));
+  color: hsl(var(--clr-num-key-text));
   font-size: 2rem;
-  box-shadow: 0 2px 1px 1px hsl(var(--clr-t1-gray-orange-key-shadow));
+  box-shadow: 0 2px 1px 1px hsl(var(--clr-num-key-shadow));
   cursor: pointer;
 }
 
@@ -224,8 +202,8 @@ input::placeholder {
   font-size: 1rem;
   text-transform: uppercase;
   color: hsl(var(--clr-white));
-  background: hsl(var(--clr-t1-blue-key-bg));
-  box-shadow: 0 2px 1px 1px hsl(var(--clr-t1-blue-key-shadow));
+  background: hsl(var(--clr-accent-key-bg));
+  box-shadow: 0 2px 1px 1px hsl(var(--clr-accent-key-shadow));
 }
 
 #reset {
@@ -233,9 +211,9 @@ input::placeholder {
 }
 #equals {
   grid-column: 3/-1;
-  background: hsl(var(--clr-t1-red-key-bg));
-  box-shadow: 0 2px 1px 1px hsl(var(--clr-t1-red-key-shadow));
-  color: hsl(var(--clr-white));
+  background: hsl(var(--clr-equal-key-bg));
+  box-shadow: 0 2px 1px 1px hsl(var(--clr-equal-key-shadow));
+  color: hsl(var(--clr-equal-key-text));
 }
 
 @media only screen and (min-width: 800px) {
@@ -246,6 +224,7 @@ input::placeholder {
     height: 100vh;
   }
   .main {
-    max-width: 25rem;
+    min-width: 30rem;
+    max-width: 35rem;
   }
 }
