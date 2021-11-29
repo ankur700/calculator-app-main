@@ -1,15 +1,5 @@
 "use strict";
 
-const result = document.getElementById("result");
-const equals = document.getElementById("equals");
-const reset = document.getElementById("reset");
-const del = document.getElementById("del");
-
-const point = document.getElementById("point");
-const add = document.getElementById("add");
-const substract = document.getElementById("substract");
-const multiply = document.getElementById("multiply");
-const divide = document.getElementById("divide");
 let radios = document.getElementsByName("theme-toggle");
 const selectedTheme = document.getElementById("selected-theme");
 
@@ -38,55 +28,182 @@ function setTheme(theme) {
   }
 }
 
-del.addEventListener("click", function () {
-  if (result.innerHTML.length == 1) {
-    result.innerHTML = "0";
-  } else {
-    result.innerHTML = result.innerHTML.slice(0, -1);
-  }
-});
+const calculate = (n1, operator, n2) => {
+  const firstNum = parseFloat(n1);
+  const secondNum = parseFloat(n2);
+  if (operator === "add") return firstNum + secondNum;
+  if (operator === "substract") return firstNum - secondNum;
+  if (operator === "multiply") return firstNum * secondNum;
+  if (operator === "divide") return firstNum / secondNum;
+};
 
-document.querySelectorAll(".num-btn").forEach((item) => {
-  item.addEventListener("click", (event) => {
-    if (result.innerHTML == 0) {
-      result.innerHTML = item.innerHTML;
+const getKeyType = (key) => {
+  const { action } = key.dataset;
+  if (!action) return "number";
+  if (
+    action === "add" ||
+    action === "substract" ||
+    action === "multiply" ||
+    action === "divide"
+  )
+    return "operator";
+  // For everything else, return the action
+  return action;
+};
+
+const createResultString = (key, displayedNum, state) => {
+  const keyContent = key.textContent;
+  const keyType = getKeyType(key);
+  const { firstValue, operator, modValue, previousKeyType } = state;
+
+  if (keyType === "number") {
+    return displayedNum === "0" ||
+      previousKeyType === "operator" ||
+      previousKeyType === "calculate"
+      ? keyContent
+      : displayedNum + keyContent;
+  }
+
+  if (keyType === "decimal") {
+    if (!displayedNum.includes(".")) return displayedNum + ".";
+    if (previousKeyType === "operator" || previousKeyType === "calculate")
+      return "0.";
+    return displayedNum;
+  }
+
+  if (keyType === "operator") {
+    return firstValue &&
+      operator &&
+      previousKeyType !== "operator" &&
+      previousKeyType !== "calculate"
+      ? calculate(firstValue, operator, displayedNum)
+      : displayedNum;
+  }
+
+  if (keyType === "clear") {
+    if (displayedNum === "0" || displayedNum.length === 1) {
+      return "0";
     } else {
-      result.innerHTML += item.innerHTML;
+      return displayedNum.slice(0, -1);
     }
-  });
-});
-
-document.querySelectorAll(".key--operator").forEach((item) => {
-  item.addEventListener("click", function () {
-    if (item.dataset.action === "add") {
-      if (result.innerHTML.slice(-1) !== "+") {
-        result.innerHTML = result.innerHTML + "+";
-      }
-    } else if (item.dataset.action === "substract") {
-      if (result.innerHTML.slice(-1) !== "-") {
-        result.innerHTML = result.innerHTML + "-";
-      }
-    } else if (item.dataset.action === "multiply") {
-      if (result.innerHTML.slice(-1) !== "x") {
-        result.innerHTML = result.innerHTML + "x";
-      }
-    } else if (item.dataset.action === "divide") {
-      if (result.innerHTML.slice(-1) !== "/") {
-        result.innerHTML = result.innerHTML + "/";
-      }
-    }
-  });
-});
-
-point.addEventListener("click", function () {
-  if (result.innerHTML.slice(-1) !== ".") {
-    result.innerHTML = result.innerHTML + ".";
   }
+
+  if (keyType === "calculate") {
+    return firstValue
+      ? previousKeyType === "calculate"
+        ? calculate(displayedNum, operator, modValue)
+        : calculate(firstValue, operator, displayedNum)
+      : displayedNum;
+  }
+};
+
+const updateCalculatorState = (
+  key,
+  calculator,
+  calculatedValue,
+  displayedNum
+) => {
+  const keyType = getKeyType(key);
+  const { firstValue, operator, modValue, previousKeyType } =
+    calculator.dataset;
+
+  calculator.dataset.previousKeyType = keyType;
+
+  if (keyType === "operator") {
+    calculator.dataset.operator = key.dataset.action;
+    calculator.dataset.firstValue =
+      firstValue &&
+      operator &&
+      previousKeyType !== "operator" &&
+      previousKeyType !== "calculate"
+        ? calculatedValue
+        : displayedNum;
+  }
+
+  if (keyType === "calculate") {
+    calculator.dataset.modValue =
+      firstValue && previousKeyType === "calculate" ? modValue : displayedNum;
+  }
+
+  if (keyType === "reset" && key.textContent === "reset") {
+    calculator.dataset.firstValue = "";
+    calculator.dataset.modValue = "";
+    calculator.dataset.operator = "";
+    calculator.dataset.previousKeyType = "";
+    display.textContent = "0";
+  }
+};
+
+const updateVisualState = (key, calculator) => {
+  const keyType = getKeyType(key);
+  Array.from(key.parentNode.children).forEach((k) =>
+    k.classList.remove("is-depressed")
+  );
+
+  if (keyType === "operator") key.classList.add("is-depressed");
+  if (keyType === "clear" && key.textContent !== "del") key.textContent = "del";
+};
+
+const calculator = document.querySelector(".calculator");
+const display = calculator.querySelector("#result");
+const keys = calculator.querySelector(".keypad");
+
+keys.addEventListener("click", (e) => {
+  if (!e.target.matches("button")) return;
+  const key = e.target;
+  const displayedNum = display.textContent;
+  const resultString = createResultString(
+    key,
+    displayedNum,
+    calculator.dataset
+  );
+
+  display.textContent = resultString;
+  updateCalculatorState(key, calculator, resultString, displayedNum);
+  updateVisualState(key, calculator);
 });
 
-equals.addEventListener("click", function () {
-  result.innerHTML = eval(result.innerHTML);
-});
+// document.querySelectorAll(".num-btn").forEach((item) => {
+//   item.addEventListener("click", (event) => {
+//     if (result.innerHTML == 0) {
+//       result.innerHTML = item.innerHTML;
+//     } else {
+//       result.innerHTML += item.innerHTML;
+//     }
+//   });
+// });
+
+// document.querySelectorAll(".key--operator").forEach((item) => {
+//   item.addEventListener("click", function () {
+//     if (item.dataset.action === "add") {
+//       if (result.innerHTML.slice(-1) !== "+") {
+//         result.innerHTML = result.innerHTML + "+";
+//       }
+//     } else if (item.dataset.action === "substract") {
+//       if (result.innerHTML.slice(-1) !== "-") {
+//         result.innerHTML = result.innerHTML + "-";
+//       }
+//     } else if (item.dataset.action === "multiply") {
+//       if (result.innerHTML.slice(-1) !== "x") {
+//         result.innerHTML = result.innerHTML + "x";
+//       }
+//     } else if (item.dataset.action === "divide") {
+//       if (result.innerHTML.slice(-1) !== "/") {
+//         result.innerHTML = result.innerHTML + "/";
+//       }
+//     }
+//   });
+// });
+
+// point.addEventListener("click", function () {
+//   if (result.innerHTML.slice(-1) !== ".") {
+//     result.innerHTML = result.innerHTML + ".";
+//   }
+// });
+
+// equals.addEventListener("click", function () {
+//   result.innerHTML = eval(result.innerHTML);
+// });
 
 reset.addEventListener("click", function () {
   result.innerHTML = "0";
