@@ -175,6 +175,9 @@ body {
   align-items: center;
   height: 65px;
 }
+.calculator {
+  gap: 1.5rem;
+}
 
 .keypad {
   background: hsl(var(--clr-toggle-bg));
